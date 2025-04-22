@@ -1,6 +1,7 @@
 import generateToken from "../utils/generateWebToken.js";
-import User from "../models/user.model.js";
-import bcrypt from "bcryptjs";
+import { hashPassword } from "../utils/hashPassword.js";
+import { findUserByEmail } from "../service/user.service.js";
+import { createUser } from "../service/user.service.js";
 
 const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
@@ -9,21 +10,21 @@ const signup = async (req, res) => {
     if (!fullName || !email || !password) {
       return res.status(400).json({ message: "All field are require!" });
     }
+
     if (password.length < 6) {
       return res
         .status(400)
         .json({ message: "Password must be at least 6 characters long." });
     }
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await findUserByEmail(email);
     if (existingUser) {
       return res.status(400).json({ message: "email already exist" });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await hashPassword(password);
 
-    const newUser = new User({
+    const newUser = await createUser({
       fullName,
       email,
       password: hashedPassword,
@@ -31,7 +32,7 @@ const signup = async (req, res) => {
 
     if (newUser) {
       generateToken(newUser._id, res);
-      const createdNewUser = await newUser.save();
+      //   const createdNewUser = await newUser.save();
 
       res.status(201).json({
         _id: newUser._id,
