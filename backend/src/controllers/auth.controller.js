@@ -87,8 +87,14 @@ const login = asyncHandler(async (req, res) => {
   );
 });
 
-const logout = (req, res) => {
-  res.send("logout");
-};
+const logout = asyncHandler(async (req, res) => {
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // optional but good practice
+    sameSite: "strict", // recommended for security
+  });
+
+  res.status(200).json(new ApiResponse(200, null, "Logged out successfully"));
+});
 
 export { signup, login, logout };
