@@ -3,84 +3,89 @@ import { hashPassword } from "../utils/hashPassword.js";
 import { findUserByEmail } from "../service/user.service.js";
 import { createUser } from "../service/user.service.js";
 import bcrypt from "bcryptjs";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 
-const signup = async (req, res) => {
+const signup = asyncHandler(async (req, res) => {
   const { fullName, email, password } = req.body;
 
-  try {
-    if (!fullName || !email || !password) {
-      return res.status(400).json({ message: "All field are require!" });
-    }
-
-    if (password.length < 6) {
-      return res
-        .status(400)
-        .json({ message: "Password must be at least 6 characters long." });
-    }
-
-    const existingUser = await findUserByEmail(email);
-    if (existingUser) {
-      return res.status(400).json({ message: "email already exist" });
-    }
-
-    const hashedPassword = await hashPassword(password);
-
-    const newUser = await createUser({
-      fullName,
-      email,
-      password: hashedPassword,
-    });
-
-    if (newUser) {
-      const token = generateToken(newUser._id, res);
-      //   const createdNewUser = await newUser.save();
-
-      res.status(201).json({
-        _id: newUser._id,
-        fullName: newUser.fullName,
-        email: newUser.email,
-        profilePic: newUser.profilePic,
-        token,
-      });
-    } else {
-      res.status(400).json({ message: "Invalid user data" });
-    }
-  } catch (err) {
-    console.log("Error in signup controller", err.message);
-    res.status(500).json({ message: "Internal server error" });
+  if (!fullName || !email || !password) {
+    throw new ApiError(400, "All fields are require!");
   }
-};
 
-const login = async (req, res) => {
+  if (password.length < 6) {
+    throw new ApiError(400, "Password must be at least 6 characters long.");
+  }
+
+  const existingUser = await findUserByEmail(email);
+  if (existingUser) {
+    throw new ApiError(400, "email already exist");
+  }
+
+  const hashedPassword = await hashPassword(password);
+
+  const newUser = await createUser({
+    fullName,
+    email,
+    password: hashedPassword,
+  });
+
+  if (newUser) {
+    const token = generateToken(newUser._id, res);
+
+    res.status(201).json(
+      new ApiResponse(
+        201,
+        {
+          _id: newUser._id,
+          fullName: newUser.fullName,
+          email: newUser.email,
+          profilePic: newUser.profilePic,
+          token,
+        },
+        "user successfully created"
+      )
+    );
+  } else {
+    throw new ApiError(400, "Invalid user data");
+  }
+});
+
+const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  try {
-    const userExist = await findUserByEmail(email);
+  const userExist = await findUserByEmail(email);
 
-    if (!userExist) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
+  if (!userExist) {
+    throw new ApiError(400, "Invalid credentials");
+  }
 
-    const isPasswordCorrect = await bcrypt.compare(
-      password, // frontend incoming password
-      userExist.password // database password
-    );
+  const isPasswordCorrect = await bcrypt.compare(
+    password, // frontend incoming password
+    userExist.password // database password
+  );
 
-    if (!isPasswordCorrect) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
+  if (!isPasswordCorrect) {
+    throw new ApiError(400, "Invalid credentials");
+  }
 
-    const token = generateToken(userExist._id, res);
+  const token = generateToken(userExist._id, res);
 
-    res.status(200).json({
-      _id: userExist._id,
-      fullName: userExist.fullName,
-      email: userExist.email,
-      profilePic: userExist.profilePic,
-      token,
-    });
-  } catch (err) {}
-};
+  res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        _id: userExist._id,
+        fullName: userExist.fullName,
+        email: userExist.email,
+        profilePic: userExist.profilePic,
+        token,
+      },
+      "user successfully logged in"
+    )
+  );
+});
 
 const logout = (req, res) => {
   res.send("logout");
