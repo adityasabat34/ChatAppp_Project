@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import jwt from "jsonwebtoken";
 
 const signup = asyncHandler(async (req, res) => {
   const { fullName, email, password } = req.body;
@@ -88,13 +89,31 @@ const login = asyncHandler(async (req, res) => {
 });
 
 const logout = asyncHandler(async (req, res) => {
+  const token = req.cookies.jwt;
+
+  if (!token) {
+    throw new ApiError(401, "No token found. User already logged out.");
+  }
+
+  let decoded;
+
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (err) {
+    throw new ApiError(401, "Invalid or expired token");
+  }
+
+  console.log("User logging out:", decoded);
+
   res.clearCookie("jwt", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // optional but good practice
-    sameSite: "strict", // recommended for security
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
   });
 
-  res.status(200).json(new ApiResponse(200, null, "Logged out successfully"));
+  res
+    .status(200)
+    .json(new ApiResponse(200, decoded, "Logged out successfully"));
 });
 
 export { signup, login, logout };
