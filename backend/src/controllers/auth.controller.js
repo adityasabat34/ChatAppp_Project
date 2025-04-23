@@ -116,4 +116,5 @@ const logout = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, decoded, "Logged out successfully"));
 });
 
-export { signup, login, logout };
+const updateProfile = asyncHandler(async (req, res) => {});
+export { signup, login, logout, updateProfile };
