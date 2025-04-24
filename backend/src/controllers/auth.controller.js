@@ -7,6 +7,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
+import cloudinary from "../lib/cloudinary.js";
+import User from "../models/user.model.js";
 
 const signup = asyncHandler(async (req, res) => {
   const { fullName, email, password } = req.body;
@@ -116,5 +118,24 @@ const logout = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, decoded, "Logged out successfully"));
 });
 
-const updateProfile = asyncHandler(async (req, res) => {});
+const updateProfile = asyncHandler(async (req, res) => {
+  const { profilePic } = req.body;
+  const userId = req.user._id;
+
+  if (!profilePic) {
+    throw new ApiError(400, "Profile picture is require!");
+  }
+
+  const uploadResponse = await cloudinary.uploader.upload(profilePic);
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { profilePic: uploadResponse.secure_url },
+    { new: true }
+  );
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, updatedUser, "User profile picture updated"));
+});
+
 export { signup, login, logout, updateProfile };
