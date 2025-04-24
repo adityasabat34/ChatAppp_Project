@@ -138,4 +138,11 @@ const updateProfile = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, updatedUser, "User profile picture updated"));
 });
 
-export { signup, login, logout, updateProfile };
+const checkAuth = asyncHandler(async (req, res) => {
+  const user = req.user;
+  res
+    .status(200)
+    .json(new ApiResponse(200, user, "user data fetch successfully"));
+});
+
+export { signup, login, logout, updateProfile, checkAuth };

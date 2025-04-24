@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 
-const protect = asyncHandler(async (req, res) => {
+const protect = asyncHandler(async (req, res, next) => {
   const token = req.cookies.jwt;
 
   if (!token) {
