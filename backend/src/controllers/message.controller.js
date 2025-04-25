@@ -1,3 +1,4 @@
+import cloudinary from "../lib/cloudinary.js";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -15,7 +16,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, filteredUsers, "All User data fetched"));
 });
 
-const getMesaages = asyncHandler(async (req, res) => {
+const getMessages = asyncHandler(async (req, res) => {
   const { id: userToChatId } = req.params;
 
   const myId = req.user._id;
@@ -38,4 +39,29 @@ const getMesaages = asyncHandler(async (req, res) => {
     );
 });
 
-export { getAllUsers, getMesaages };
+const sendMessages = asyncHandler(async (req, res) => {
+  const { id: opponentUserId } = req.params;
+  const { text, image } = req.body;
+  const myId = req.user._id;
+  console.log(text);
+
+  let imageUrlFromCloudinary = "";
+
+  if (image) {
+    const uploadResponse = await cloudinary.uploader.upload(image);
+    imageUrlFromCloudinary = uploadResponse.secure_url;
+  }
+
+  const newMessages = new Message({
+    senderId: myId,
+    recieverId: opponentUserId,
+    text,
+    image: imageUrlFromCloudinary,
+  });
+
+  const savedMessage = await newMessages.save();
+
+  res.status(200).json(200, savedMessage, "New message sent");
+});
+
+export { getAllUsers, getMessages, sendMessages };
