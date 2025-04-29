@@ -7,6 +7,7 @@ import { FaUserCircle, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { LuMessageCircleMore } from "react-icons/lu";
 import { TbLockPassword } from "react-icons/tb";
 import CommunitySectionImage from "../components/CommunitySectionImage";
+import toast from "react-hot-toast";
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,12 +21,47 @@ const SignUpPage = () => {
   const { isSigningUp, signup } = useAuthStore();
 
   const validateForm = () => {
-    if (formData.password !== formData.confirmPassword) {
+    if (!formData.fullName.trim()) {
+      toast.error("Full name is required");
       return false;
     }
+
+    if (!formData.email.trim()) {
+      toast.error("Email is required");
+      return false;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      toast.error("Invalid email format");
+      return false;
+    }
+
+    if (!formData.password.trim()) {
+      toast.error("Password is required");
+      return false;
+    }
+
+    if (formData.password.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return false;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match");
+      return false;
+    }
+
+    return true;
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const success = validateForm();
+
+    if (success === true) {
+      signup(formData);
+    }
+  };
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2 ">
@@ -106,6 +142,39 @@ const SignUpPage = () => {
                   value={formData.password}
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
+                  }
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center z-10"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <FaRegEyeSlash size={20} />
+                  ) : (
+                    <FaRegEye size={20} />
+                  )}
+                </button>
+              </div>
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Confirm Password</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none z-10">
+                  <TbLockPassword size={20} />
+                </div>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className={`input input-bordered w-full pl-10`}
+                  placeholder="**********"
+                  value={formData.confirmPassword}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      confirmPassword: e.target.value,
+                    })
                   }
                 />
                 <button
