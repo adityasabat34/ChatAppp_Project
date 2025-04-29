@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { FaUserCircle, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { LuMessageCircleMore } from "react-icons/lu";
 import { TbLockPassword } from "react-icons/tb";
+import CommunitySectionImage from "../components/CommunitySectionImage";
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,11 +14,16 @@ const SignUpPage = () => {
     fullName: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const { isSigningUp, signup } = useAuthStore();
 
-  const validateForm = () => {};
+  const validateForm = () => {
+    if (formData.password !== formData.confirmPassword) {
+      return false;
+    }
+  };
 
   const handleSubmit = () => {};
 
@@ -94,7 +100,7 @@ const SignUpPage = () => {
                   <TbLockPassword size={20} />
                 </div>
                 <input
-                  type="text"
+                  type={showPassword ? "text" : "password"}
                   className={`input input-bordered w-full pl-10`}
                   placeholder="**********"
                   value={formData.password}
@@ -104,7 +110,7 @@ const SignUpPage = () => {
                 />
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center z-10"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
@@ -142,6 +148,11 @@ const SignUpPage = () => {
           </div>
         </div>
       </div>
+
+      <CommunitySectionImage
+        title={`Join ZenTalk Community`}
+        subtitle={`Connect with friends, Chat with friends, and Have fun with friends`}
+      />
     </div>
   );
 };
