@@ -49,7 +49,9 @@ const useAuthStore = create((set) => ({
         "error occured in login process",
         err?.response?.data || err.message
       );
-      toast.error(err?.response?.data || err.message);
+      const errorMessage =
+        err?.response?.data?.message || err?.response?.data || err.message;
+      toast.error(errorMessage);
     } finally {
       set({ isLoggingIn: false });
     }
