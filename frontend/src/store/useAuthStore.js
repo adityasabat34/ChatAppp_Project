@@ -67,6 +67,25 @@ const useAuthStore = create((set) => ({
       toast.error(err?.response?.data || err.message);
     }
   },
+
+  updateProfilePicture: async (data) => {
+    set({ isUpdatingProfile: true });
+    try {
+      const res = await axiosInstance.put("/auth/update-profile", data);
+      set({ authUser: res.data });
+      toast.success("Profile picture updated successfully");
+    } catch (err) {
+      console.error(
+        "Error in updateProfilePicture:",
+        err?.response?.data || err.message
+      );
+      const errorMessage =
+        err?.response?.data?.message || err?.response?.data || err.message;
+      toast.error(errorMessage);
+    } finally {
+      set({ isUpdatingProfile: false });
+    }
+  },
 }));
 
 export { useAuthStore };
