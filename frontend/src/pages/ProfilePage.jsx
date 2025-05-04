@@ -3,6 +3,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import { useState } from "react";
 import { Camera } from "lucide-react";
 import { User, Mail } from "lucide-react";
+import toast from "react-hot-toast";
 
 const ProfilePage = () => {
   const { authUser, updateProfilePicture, isUpdatingProfile } = useAuthStore();
@@ -10,10 +11,25 @@ const ProfilePage = () => {
 
   console.log("user:", authUser.data.email);
 
-  const handleImageChange = () => {};
+  const handleImageChange = async (e) => {
+    e.preventDefault();
+
+    const file = e.target.files[0];
+    if (!file) return toast.error("No file selected");
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = async () => {
+      const base64Image = reader.result;
+      setSelectImg(base64Image);
+      await updateProfilePicture({ profilePic: base64Image });
+    };
+  };
 
   return (
-    <div className="h-screen pt-20">
+    <div className="h-screen pt-10">
       <div className="max-w-2xl mx-auto p-4 py-8">
         <div className="bg-base-300 rounded-lg p-6 space-y-8">
           <div className="text-center">
