@@ -21,43 +21,43 @@ export function TerminalDemo() {
         <Terminal key={key}>
           <TypingAnimation>&gt; npm dlx shadcn@latest init</TypingAnimation>
 
-          <AnimatedSpan delay={1500} className="text-green-500">
+          <AnimatedSpan delay={1500} className="text-green-500 font-semibold">
             <span>✔ Preflight checks.</span>
           </AnimatedSpan>
 
-          <AnimatedSpan delay={2000} className="text-green-500">
+          <AnimatedSpan delay={2000} className="text-green-500 font-semibold">
             <span>✔ Verifying framework. Found Next.js.</span>
           </AnimatedSpan>
 
-          <AnimatedSpan delay={2500} className="text-green-500">
+          <AnimatedSpan delay={2500} className="text-green-500 font-semibold">
             <span>✔ Validating Tailwind CSS.</span>
           </AnimatedSpan>
 
-          <AnimatedSpan delay={3000} className="text-green-500">
+          <AnimatedSpan delay={3000} className="text-green-500 font-semibold">
             <span>✔ Validating import alias.</span>
           </AnimatedSpan>
 
-          <AnimatedSpan delay={3500} className="text-green-500">
+          <AnimatedSpan delay={3500} className="text-green-500 font-semibold">
             <span>✔ Writing components.json.</span>
           </AnimatedSpan>
 
-          <AnimatedSpan delay={4000} className="text-green-500">
+          <AnimatedSpan delay={4000} className="text-green-500 font-semibold">
             <span>✔ Checking registry.</span>
           </AnimatedSpan>
 
-          <AnimatedSpan delay={4500} className="text-green-500">
+          <AnimatedSpan delay={4500} className="text-green-500 font-semibold">
             <span>✔ Updating tailwind.config.ts</span>
           </AnimatedSpan>
 
-          <AnimatedSpan delay={5000} className="text-green-500">
+          <AnimatedSpan delay={5000} className="text-green-500 font-semibold">
             <span>✔ Updating app/globals.css</span>
           </AnimatedSpan>
 
-          <AnimatedSpan delay={5500} className="text-green-500">
+          <AnimatedSpan delay={5500} className="text-green-500 font-semibold">
             <span>✔ Installing dependencies.</span>
           </AnimatedSpan>
 
-          <AnimatedSpan delay={6000} className="text-blue-500">
+          <AnimatedSpan delay={6000} className="text-blue-500 font-semibold">
             <span>ℹ Updated 1 file:</span>
             <span className="pl-2">- lib/utils.ts</span>
           </AnimatedSpan>
