@@ -7,7 +7,7 @@ export function TerminalDemo() {
   const [key, setKey] = useState(0); // for triggering re-render
 
   useEffect(() => {
-    const totalDuration = 7500 + 2000; // 7.5s for animation, 2s buffer
+    const totalDuration = 7500 + 3000; // 7.5s for animation, 2s buffer
     const interval = setInterval(() => {
       setKey((prev) => prev + 1); // refresh the component
     }, totalDuration);
@@ -19,56 +19,62 @@ export function TerminalDemo() {
     <div className="hidden lg:flex items-center justify-center min-h-screen bg-base-200 px-4 py-8">
       <div className="w-full max-w-3xl">
         <Terminal key={key}>
-          <TypingAnimation>&gt; npm dlx shadcn@latest init</TypingAnimation>
+          <TypingAnimation>&gt; npm dlx shadcn@latest init </TypingAnimation>
 
           <AnimatedSpan delay={1500} className="text-green-500 font-semibold">
-            <span>✔ Preflight checks.</span>
+            <span>✔ Establishing secure connection...</span>
           </AnimatedSpan>
 
           <AnimatedSpan delay={2000} className="text-green-500 font-semibold">
-            <span>✔ Verifying framework. Found Next.js.</span>
+            <span>✔ Authenticating your presence...</span>
           </AnimatedSpan>
 
           <AnimatedSpan delay={2500} className="text-green-500 font-semibold">
-            <span>✔ Validating Tailwind CSS.</span>
+            <span>✔ Syncing recent messages...</span>
           </AnimatedSpan>
 
           <AnimatedSpan delay={3000} className="text-green-500 font-semibold">
-            <span>✔ Validating import alias.</span>
+            <span>✔ Loading your chat rooms...</span>
           </AnimatedSpan>
 
           <AnimatedSpan delay={3500} className="text-green-500 font-semibold">
-            <span>✔ Writing components.json.</span>
+            <span>✔ Fetching friend list...</span>
           </AnimatedSpan>
 
           <AnimatedSpan delay={4000} className="text-green-500 font-semibold">
-            <span>✔ Checking registry.</span>
+            <span>✔ Updating emoji reactions...</span>
           </AnimatedSpan>
 
           <AnimatedSpan delay={4500} className="text-green-500 font-semibold">
-            <span>✔ Updating tailwind.config.ts</span>
+            <span>✔ Checking unread messages...</span>
           </AnimatedSpan>
 
           <AnimatedSpan delay={5000} className="text-green-500 font-semibold">
-            <span>✔ Updating app/globals.css</span>
+            <span>✔ Compiling chat history...</span>
           </AnimatedSpan>
 
           <AnimatedSpan delay={5500} className="text-green-500 font-semibold">
-            <span>✔ Installing dependencies.</span>
+            <span>✔ Summoning the GIF gods...</span>
           </AnimatedSpan>
 
           <AnimatedSpan delay={6000} className="text-blue-500 font-semibold">
-            <span>ℹ Updated 1 file:</span>
-            <span className="pl-2">- lib/utils.ts</span>
+            <span>ℹ Almost ready...</span>
+            <span className="pl-2">Setting up your chat space</span>
           </AnimatedSpan>
 
-          <TypingAnimation delay={6500} className="text-muted-foreground">
-            Success! Project initialization completed.
-          </TypingAnimation>
+          <AnimatedSpan
+            delay={6500}
+            className="text-muted-foreground font-extrabold"
+          >
+            Chat portal initialized successfully!
+          </AnimatedSpan>
 
-          <TypingAnimation delay={7000} className="text-muted-foreground">
-            You may now add components.
-          </TypingAnimation>
+          <AnimatedSpan
+            delay={7000}
+            className="text-muted-foreground font-extrabold"
+          >
+            Welcome back, let's catch up 🎉
+          </AnimatedSpan>
         </Terminal>
       </div>
     </div>

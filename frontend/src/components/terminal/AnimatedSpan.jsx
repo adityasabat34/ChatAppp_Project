@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
 
-export function AnimatedSpan({ delay = 0, children, className = "" }) {
-  const [visible, setVisible] = useState(false);
+export function AnimatedSpan({ children, delay = 0, className = "" }) {
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setVisible(true);
+    const timer = setTimeout(() => {
+      setShow(true);
     }, delay);
-    return () => clearTimeout(timeout);
+    return () => clearTimeout(timer);
   }, [delay]);
 
-  return visible ? <div className={className}>{children}</div> : null;
+  return (
+    <div
+      className={`${
+        show ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
+      } transition-all duration-500 ease-out ${className}`}
+    >
+      {children}
+    </div>
+  );
 }
