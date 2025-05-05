@@ -8,6 +8,7 @@ import { LuMessageCircleMore } from "react-icons/lu";
 import { TbLockPassword } from "react-icons/tb";
 import CommunitySectionImage from "../components/CommunitySectionImage";
 import toast from "react-hot-toast";
+import { TerminalDemo } from "../components/TerminalDemo";
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -218,10 +219,7 @@ const SignUpPage = () => {
         </div>
       </div>
 
-      <CommunitySectionImage
-        title={`Join ZenTalk Community`}
-        subtitle={`Connect with friends, Chat with friends, and Have fun with friends`}
-      />
+      <TerminalDemo />
     </div>
   );
 };
