@@ -12,8 +12,8 @@ const useAuthStore = create((set) => ({
 
   checkAuth: async () => {
     try {
-      const { data } = await axiosInstance.get("/auth/check");
-      set({ authUser: data });
+      const res = await axiosInstance.get("/auth/check");
+      set({ authUser: res.data.data });
     } catch (err) {
       console.error("Error in checkAuth:", err?.response?.data || err.message);
       set({ authUser: null });
@@ -27,7 +27,7 @@ const useAuthStore = create((set) => ({
     // data includes fullName, email, password
     try {
       const res = await axiosInstance.post("/auth/signup", data);
-      set({ authUser: res.data });
+      set({ authUser: res.data.data });
       toast.success("Account created successfully");
     } catch (err) {
       console.error("Error in signup:", err?.response?.data || err.message);
@@ -42,7 +42,7 @@ const useAuthStore = create((set) => ({
     set({ isLoggingIn: true });
     try {
       const res = await axiosInstance.post("/auth/login", data);
-      set({ authUser: res.data });
+      set({ authUser: res.data.data });
       toast.success("Logged In Successfully");
     } catch (err) {
       console.error(
@@ -68,11 +68,11 @@ const useAuthStore = create((set) => ({
     }
   },
 
-  updateProfilePicture: async (data) => {
+  updateProfilePicture: async (picData) => {
     set({ isUpdatingProfile: true });
     try {
-      const res = await axiosInstance.put("/auth/update-profile", data);
-      set({ authUser: res.data });
+      const res = await axiosInstance.put("/auth/update-profile", picData);
+      set({ authUser: res.data.data });
       toast.success("Profile picture updated successfully");
     } catch (err) {
       console.error(

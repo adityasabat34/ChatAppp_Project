@@ -9,10 +9,9 @@ const ProfilePage = () => {
   const { authUser, updateProfilePicture, isUpdatingProfile } = useAuthStore();
   const [selectImg, setSelectImg] = useState(null);
 
-  console.log("IMG:", selectImg);
-
+  console.log("fullName", authUser.fullName);
   const handleImageChange = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     const file = e.target.files[0];
     if (!file) return toast.error("No file selected");
@@ -77,7 +76,7 @@ const ProfilePage = () => {
                 Full Name
               </div>
               <p className="px-4 py-2.5 bg-base-200 rounded-lg border">
-                {authUser?.data.fullName}
+                {authUser?.fullName}
               </p>
             </div>
 
@@ -87,7 +86,7 @@ const ProfilePage = () => {
                 Email Address
               </div>
               <p className="px-4 py-2.5 bg-base-200 rounded-lg border">
-                {authUser?.data.email}
+                {authUser?.email}
               </p>
             </div>
           </div>
@@ -97,7 +96,7 @@ const ProfilePage = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between py-2 border-b border-zinc-700">
                 <span>Member Since</span>
-                <span>{authUser.data.createdAt?.split("T")[0]}</span>
+                <span>{authUser?.createdAt?.split("T")[0]}</span>
               </div>
               <div className="flex items-center justify-between py-2">
                 <span>Account Status</span>
