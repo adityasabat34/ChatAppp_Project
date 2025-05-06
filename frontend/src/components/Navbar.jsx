@@ -1,10 +1,20 @@
 import React from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { LogOut, MessageSquareLock, Settings, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { logout, authUser } = useAuthStore();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (err) {
+      console.error("Error in logout:", err?.response?.data || err.message);
+    }
+  };
   return (
     <header className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-10 backdrop-blur-lg bg-base-100/80">
       <div className="container mx-auto px-4 h-16">
@@ -35,7 +45,10 @@ const Navbar = () => {
                   </span>
                 </Link>
 
-                <button className="flex gap-2 items-center" onClick={logout}>
+                <button
+                  className="flex gap-2 items-center"
+                  onClick={handleLogout}
+                >
                   <LogOut className="size-5" />
                   <span className="hidden sm:inline">Logout</span>
                 </button>

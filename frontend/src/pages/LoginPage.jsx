@@ -8,6 +8,7 @@ import { LuMessageCircleMore } from "react-icons/lu";
 import { Mail, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { TerminalDemo } from "../components/TerminalDemo";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -135,10 +136,7 @@ const LoginPage = () => {
         </div>
       </div>
 
-      <CommunitySectionImage
-        title={`Welcome Back Chatifier`}
-        subtitle={`Connect with friends, Chat with friends, and Have fun with friends`}
-      />
+      <TerminalDemo />
     </div>
   );
 };
