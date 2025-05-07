@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { FaUserCircle, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { LuMessageCircleMore } from "react-icons/lu";
 import { TbLockPassword } from "react-icons/tb";
-import CommunitySectionImage from "../components/CommunitySectionImage";
 import toast from "react-hot-toast";
 import { TerminalDemo } from "../components/TerminalDemo";
 

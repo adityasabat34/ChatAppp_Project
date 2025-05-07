@@ -30,7 +30,7 @@ const App = () => {
 
   console.log(authUser);
   return (
-    <div data-theme={theme}>
+    <div data-theme={theme} className="min-h-screen">
       <Navbar />
       <Routes>
         <Route
