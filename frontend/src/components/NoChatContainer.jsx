@@ -18,7 +18,9 @@ const NoChatContainer = () => {
         </div>
 
         {/* Welcome Text */}
-        <h2 className="text-2xl font-bold">Welcome to Chatty!</h2>
+        <h2 className="text-2xl font-bold animate-pulse text-blue-700">
+          Welcome to Chatify!
+        </h2>
         <p className="text-base-content/60">
           Select a conversation from the sidebar to start chatting
         </p>
