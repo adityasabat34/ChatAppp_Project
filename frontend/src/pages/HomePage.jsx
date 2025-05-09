@@ -2,7 +2,7 @@ import React from "react";
 import NoChatContainer from "../components/NoChatContainer";
 import ChatContainer from "../components/ChatContainer";
 import { useChatStore } from "../store/useChatStore";
-import { Sidebar } from "lucide-react";
+import Sidebar from "../components/Sidebar";
 
 const HomePage = () => {
   const { selectedUser } = useChatStore();

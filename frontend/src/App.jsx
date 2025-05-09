@@ -28,7 +28,7 @@ const App = () => {
     );
   }
 
-  console.log("theme", theme);
+  console.log("authUser", authUser);
   return (
     <div data-theme={theme} className="min-h-screen">
       <Navbar />
