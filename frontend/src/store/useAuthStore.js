@@ -7,7 +7,7 @@ const useAuthStore = create((set) => ({
   isSigningUp: false, // Loading state for signing up
   isLoggingIn: false, // Loading state for logging in
   isUpdatingProfile: false, // Loading state for updating profile
-
+  onlineUsers: [],
   isCheckingAuth: true, //Loading state for authenticated user
 
   checkAuth: async () => {

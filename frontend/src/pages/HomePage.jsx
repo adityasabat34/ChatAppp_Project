@@ -13,7 +13,7 @@ const HomePage = () => {
       <Sidebar />
 
       {/* Chat area - flexible */}
-      <div className="flex-1 h-full overflow-hidden pt-16">
+      <div className="flex-1 h-full overflow-hidden">
         {!selectedUser ? <NoChatContainer /> : <ChatContainer />}
       </div>
     </div>
