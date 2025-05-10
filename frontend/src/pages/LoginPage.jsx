@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useState } from "react";
-import CommunitySectionImage from "../components/CommunitySectionImage";
+
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { TbLockPassword } from "react-icons/tb";
 import { LuMessageCircleMore } from "react-icons/lu";

@@ -11,7 +11,6 @@ const Sidebar = () => {
 
   useEffect(() => {
     getUsers();
-    console.log(getUsers);
   }, [getUsers]);
 
   if (isUserLoading) return <SidebarSkeleton />;
