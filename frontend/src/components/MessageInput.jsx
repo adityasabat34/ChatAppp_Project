@@ -84,7 +84,7 @@ const MessageInput = () => {
           />
 
           <button
-            className={`hidden sm:flex btn btn-circle ${
+            className={` sm:flex btn btn-circle ${
               previewImage ? "text-green-600" : "text-gray-600"
             }`}
             onClick={() => fileInputRef.current?.click()}
@@ -95,7 +95,9 @@ const MessageInput = () => {
 
         <button
           type="submit"
-          className="btn btn-sm btn-circle"
+          className={`${
+            text.length > 0 || previewImage ? "bg-blue-700" : "bg-gray-600"
+          } p-1.5 rounded-xl border-2 border-black`}
           disabled={!text.trim() && !previewImage}
         >
           <Send size={22} />
