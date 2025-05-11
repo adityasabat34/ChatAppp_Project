@@ -2,6 +2,7 @@ import React from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { LogOut, MessageSquareLock, Settings, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { AnimatedSpan } from "./terminal/AnimatedSpan";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -27,7 +28,9 @@ const Navbar = () => {
               <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
                 <MessageSquareLock className="w-5 h-5 text-primary" />
               </div>
-              <h1 className="text-lg font-bold">Chatify</h1>
+              <h1 className="text-lg font-bold">
+                <AnimatedSpan delay={100}> Chatify</AnimatedSpan>
+              </h1>
             </Link>
           </div>
           <div className="flex items-center gap-4">
