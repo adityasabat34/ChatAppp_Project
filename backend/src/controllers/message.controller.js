@@ -40,9 +40,9 @@ const getMessages = asyncHandler(async (req, res) => {
 });
 
 const sendMessages = asyncHandler(async (req, res) => {
-  const { id: opponentUserId } = req.params;
+  const { id: recieverId } = req.params;
   const { text, image } = req.body;
-  const myId = req.user._id;
+  const senderId = req.user._id;
   console.log(text);
 
   let imageUrlFromCloudinary = "";
@@ -53,8 +53,8 @@ const sendMessages = asyncHandler(async (req, res) => {
   }
 
   const newMessages = new Message({
-    senderId: myId,
-    recieverId: opponentUserId,
+    senderId,
+    recieverId,
     text,
     image: imageUrlFromCloudinary,
   });
