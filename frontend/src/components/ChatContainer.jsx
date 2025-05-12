@@ -5,6 +5,7 @@ import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import MessageLoadingScreen from "./skeletons/MessageLoadingScreen";
 import { useAuthStore } from "../store/useAuthStore";
+import { LocalTimeForMessage } from "../lib/LocalTime";
 
 const ChatContainer = () => {
   const { messages, isMessageLoading, getMessages, selectedUser } =
@@ -17,14 +18,16 @@ const ChatContainer = () => {
   }, [getMessages, selectedUser._id]);
 
   if (isMessageLoading) {
-    <div className="flex-1 flex flex-col overflow-auto">
-      <ChatHeader />
-      <MessageLoadingScreen />
-      <MessageInput />
-    </div>;
+    return (
+      <div className="flex-1 flex flex-col overflow-auto h-full">
+        <ChatHeader />
+        <MessageLoadingScreen />
+        <MessageInput />
+      </div>
+    );
   }
   return (
-    <div className="flex-1 flex flex-col overflow-auto">
+    <div className="flex-1 flex flex-col overflow-auto h-full">
       <ChatHeader />
       {/* <MessageLoadingScreen /> */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -46,6 +49,23 @@ const ChatContainer = () => {
                   alt="Profile Pic"
                 />
               </div>
+            </div>
+
+            <div className="chat-header mb-1">
+              <time className="text-xs opacity-50 ml-1">
+                {LocalTimeForMessage(message.createdAt)}
+              </time>
+            </div>
+            <div className="chat-bubble flex">
+              {message.image && (
+                <img
+                  src={message.image}
+                  alt="Sent Image"
+                  className="max-w-xs max-h-xs"
+                />
+              )}
+
+              {message.text && <p>{message.text}</p>}
             </div>
           </div>
         ))}
