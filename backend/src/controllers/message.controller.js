@@ -61,7 +61,7 @@ const sendMessages = asyncHandler(async (req, res) => {
 
   const savedMessage = await newMessages.save();
 
-  res.status(200).json(200, savedMessage, "New message sent");
+  res.status(200).json(new ApiResponse(200, savedMessage, "Message sent"));
 });
 
 export { getAllUsers, getMessages, sendMessages };
