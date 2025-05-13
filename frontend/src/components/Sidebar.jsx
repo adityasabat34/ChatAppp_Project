@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
 import SidebarSkeleton from "./skeletons/SideBarSkeleton";
 import { Users } from "lucide-react";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Sidebar = () => {
   const { users, getUsers, setSelectedUser, isUserLoading, selectedUser } =
     useChatStore();
 
-  const onlineUsers = [];
+  const { onlineUsers } = useAuthStore();
 
   useEffect(() => {
     getUsers();
