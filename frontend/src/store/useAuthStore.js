@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import axiosInstance from "../lib/axios";
 import { create } from "zustand";
 import { io } from "socket.io-client";
+import { Query } from "mongoose";
 
 const BASE_URL = "http://localhost:5000";
 
@@ -98,11 +99,17 @@ const useAuthStore = create((set, get) => ({
     const { authUser } = get();
     if (!authUser || get().socket?.connect) return;
 
-    const socket = io(BASE_URL);
+    const socket = io(BASE_URL, {
+      query: { userId: authUser._id },
+    });
     socket.connect();
 
     set({ socket: socket });
     console.log("YES CONNECTED");
+
+    socket.on("getOnlineUsers", (users) => {
+      set({ onlineUsers: users });
+    });
   },
 
   disconnectSocket: () => {
