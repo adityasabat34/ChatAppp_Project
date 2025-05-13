@@ -1,6 +1,5 @@
-import React, { use } from "react";
+import React, { useRef, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
-import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Image, Send, X } from "lucide-react";
 
@@ -12,16 +11,13 @@ const MessageInput = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    console.log("FILES", file);
-    if (!file.type.startsWith("image/")) {
+    if (!file?.type.startsWith("image/")) {
       toast.error("Please select an image file");
       return;
     }
 
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreviewImage(reader.result);
-    };
+    reader.onloadend = () => setPreviewImage(reader.result);
     reader.readAsDataURL(file);
   };
 
@@ -40,37 +36,39 @@ const MessageInput = () => {
       setPreviewImage(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (err) {
-      console.log("Failed to send message", err);
+      console.error("Failed to send message", err);
     }
   };
 
   return (
-    <div className="p-4 w-full">
+    <div className="p-3 sm:p-4 w-full">
       {previewImage && (
         <div className="mb-3 flex items-center gap-2">
           <div className="relative">
             <img
               src={previewImage}
               alt="Preview"
-              className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
+              className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border border-zinc-700"
             />
-
             <button
               onClick={removeImage}
-              className="absolute -top-1.5 -right-1.5 rounded-full bg-base-300 flex items-center justify-center"
+              className="absolute -top-2 -right-2 bg-gray-200 rounded-full p-1"
               type="button"
             >
-              <X />
+              <X size={16} />
             </button>
           </div>
         </div>
       )}
 
-      <form onSubmit={handleSendMessage} className="flex items-center gap-2">
-        <div className="flex-1 flex gap-2">
+      <form
+        onSubmit={handleSendMessage}
+        className="flex flex-wrap sm:flex-nowrap items-center gap-2"
+      >
+        <div className="flex-1 flex items-center gap-2 w-full">
           <input
             type="text"
-            className="w-full input input-bordered rounded-lg input-sm sm:input-md"
+            className="input input-bordered input-sm sm:input-md flex-grow w-full rounded-md"
             placeholder="Type something..."
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -85,10 +83,9 @@ const MessageInput = () => {
           />
 
           <button
-            className={` sm:flex btn btn-circle ${
-              previewImage ? "text-green-600" : "text-gray-600"
-            }`}
+            type="button"
             onClick={() => fileInputRef.current?.click()}
+            className="btn btn-circle p-2 bg-base-200 hover:bg-base-300"
           >
             <Image size={20} />
           </button>
@@ -96,12 +93,14 @@ const MessageInput = () => {
 
         <button
           type="submit"
-          className={`${
-            text.length > 0 || previewImage ? "bg-blue-700" : "bg-gray-600"
-          } p-1.5 rounded-xl border-2 border-black`}
+          className={`btn btn-sm sm:btn-md text-white rounded-xl px-3 py-2 transition ${
+            text || previewImage
+              ? "bg-blue-700 hover:bg-blue-800"
+              : "bg-gray-500 cursor-not-allowed"
+          }`}
           disabled={!text.trim() && !previewImage}
         >
-          <Send size={22} />
+          <Send size={20} />
         </button>
       </form>
     </div>
