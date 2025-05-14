@@ -2,7 +2,6 @@ import toast from "react-hot-toast";
 import axiosInstance from "../lib/axios";
 import { create } from "zustand";
 import { io } from "socket.io-client";
-import { Query } from "mongoose";
 
 const BASE_URL = "http://localhost:5000";
 
