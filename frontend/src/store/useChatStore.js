@@ -75,7 +75,7 @@ export const useChatStore = create((set, get) => ({
 
       if (!isMessageSentFromSelectedUser) return;
 
-      set({ message: [...get().messages, newMessage] }); //async way of doing ..get().messages, newMessage
+      set({ messages: [...get().messages, newMessage] }); //async way of doing ..get().messages, n
     });
   },
 

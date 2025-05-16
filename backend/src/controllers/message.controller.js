@@ -1,5 +1,5 @@
 import cloudinary from "../lib/cloudinary.js";
-import { getRecieverSocketId, io } from "../lib/socket.js";
+import { getReceiverSocketId, io } from "../lib/socket.js";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -62,7 +62,7 @@ const sendMessages = asyncHandler(async (req, res) => {
 
   const savedMessage = await newMessages.save();
 
-  const recieverSocketId = getRecieverSocketId(recieverId);
+  const recieverSocketId = getReceiverSocketId(recieverId);
   if (recieverSocketId) {
     io.to(recieverSocketId).emit("newMessage", newMessages); // (to) means send to particular user
   }

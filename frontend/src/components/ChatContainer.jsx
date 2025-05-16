@@ -8,14 +8,31 @@ import { useAuthStore } from "../store/useAuthStore";
 import { LocalTimeForMessage } from "../lib/LocalTime";
 
 const ChatContainer = () => {
-  const { messages, isMessageLoading, getMessages, selectedUser } =
-    useChatStore();
+  const {
+    messages,
+    isMessageLoading,
+    getMessages,
+    selectedUser,
+    getNewMessageFromUser,
+    stopGettingNewMessageFromUser,
+  } = useChatStore();
 
   const { authUser } = useAuthStore();
 
   useEffect(() => {
     getMessages(selectedUser._id);
-  }, [getMessages, selectedUser._id]);
+
+    getNewMessageFromUser();
+
+    return () => {
+      stopGettingNewMessageFromUser();
+    };
+  }, [
+    getMessages,
+    selectedUser._id,
+    getNewMessageFromUser,
+    stopGettingNewMessageFromUser,
+  ]);
 
   if (isMessageLoading) {
     return (
