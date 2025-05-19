@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { io } from "socket.io-client";
 
 const BASE_URL =
-  import.meta.env.MODE === "development" ? "http://localhost:5001" : "/";
+  import.meta.env.MODE === "development" ? "http://localhost:5000" : "/";
 
 const useAuthStore = create((set, get) => ({
   authUser: null, // initial state for user authenticated or not if yes then data will be stored
