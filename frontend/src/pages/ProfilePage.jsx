@@ -9,7 +9,6 @@ const ProfilePage = () => {
   const { authUser, updateProfilePicture, isUpdatingProfile } = useAuthStore();
   const [selectImg, setSelectImg] = useState(null);
 
-  console.log("fullName", authUser.fullName);
   const handleImageChange = async (e) => {
     // e.preventDefault();
 
