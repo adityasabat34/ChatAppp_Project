@@ -81,8 +81,11 @@ const useAuthStore = create((set, get) => ({
   updateProfilePicture: async (picData) => {
     set({ isUpdatingProfile: true });
     try {
+      console.log("Update Profile Data");
       const res = await axiosInstance.put("/auth/update-profile", picData);
+      console.log("Update Profile Response:", res.data);
       set({ authUser: res.data.data });
+
       toast.success("Profile picture updated successfully");
     } catch (err) {
       console.error(
