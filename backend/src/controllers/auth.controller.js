@@ -14,7 +14,7 @@ const signup = asyncHandler(async (req, res) => {
   const { fullName, email, password } = req.body;
 
   if (!fullName || !email || !password) {
-    throw new ApiError(400, "All fields are require!");
+    throw new ApiError(400, "All fields are require");
   }
 
   if (password.length < 6) {
